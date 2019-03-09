@@ -13,21 +13,25 @@ def emphasize(filename):
     emphasized = emphasized.astype(dtype=np.int16)
     print(emphasized); print(type(emphasized)); print(emphasized.shape)
 
-    scipy.io.wavfile.write(filename.split('.', 1 )[0] + '_emphasized.wav', sample_rate, emphasized)
+    scipy.io.wavfile.write(filename.split('.', 1)[0] + '_emphasized.wav', sample_rate, emphasized)
     
     return origin, emphasized, origin.shape[0]
 
-def plot_wav(wav_data1, wav_data2, length):
+def plot_wav(wav1, wav2, length):
     x1 = np.arange(length)
-    y1 = wav_data1
-    y2 = wav_data2
+    y1 = wav1
+    y2 = wav2
+    
+    y_lim_max = wav1.max()
+    y_lim_min = wav1.min()
+    print(y_lim_max); print(y_lim_min)
     
     fig=plt.figure(figsize=(12, 5))
     ax = fig.add_subplot(111)
     plt.plot(x1, y1, label='origin', color='blue')
     plt.plot(x1, y2, label='emphasized', color='red')
     ax.set_xlim(0, length)
-    ax.set_ylim(-25000, 25000)
+    ax.set_ylim(y_lim_min - 1000, y_lim_max + 1000)
 
     ax.set_xlabel('Times')
     ax.set_ylabel('Amplitude')
